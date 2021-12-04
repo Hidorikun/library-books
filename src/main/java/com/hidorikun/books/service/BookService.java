@@ -5,6 +5,9 @@ import com.hidorikun.books.model.entity.Book;
 import com.hidorikun.books.repository.BookRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class BookService {
 
@@ -65,5 +68,21 @@ public class BookService {
 
     public void removeBook(long bookId) {
         bookRepository.deleteById(bookId);
+    }
+
+    public List<BookDTO> getBooks() {
+        List<BookDTO> books = new ArrayList<>();
+
+        bookRepository.findAll().forEach(book -> books.add(bookToDTO(book)));
+
+        return books;
+    }
+
+    public List<BookDTO> getBooks(List<Long> bookIds) {
+        List<BookDTO> books = new ArrayList<>();
+
+        bookRepository.findAllById(bookIds).forEach(book -> books.add(bookToDTO(book)));
+
+        return books;
     }
 }

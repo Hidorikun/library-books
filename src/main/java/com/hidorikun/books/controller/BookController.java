@@ -5,6 +5,8 @@ import com.hidorikun.books.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class BookController {
@@ -12,6 +14,16 @@ public class BookController {
 
     public BookController(final BookService bookService) {
         this.bookService = bookService;
+    }
+
+    @GetMapping("books")
+    public ResponseEntity<List<BookDTO>> getBooks() {
+        return ResponseEntity.ok(bookService.getBooks());
+    }
+
+    @PostMapping("books")
+    public ResponseEntity<List<BookDTO>> getBooks(@RequestBody List<Long> bookIds) {
+        return ResponseEntity.ok(bookService.getBooks(bookIds));
     }
 
     @GetMapping("book/{bookId}")
